@@ -89,6 +89,7 @@ export default class PwsPanelPreferences extends ExtensionPreferences {
         populateStations([]); // fallback list immediately; refined when bridge answers
         try {
             const stationSession = new Soup.Session();
+            stationSession.timeout = 10; // prefs must never hang on a dead bridge
             const stationMsg = Soup.Message.new('GET', 'http://127.0.0.1:8766/stations');
             stationSession.send_and_read_async(stationMsg, GLib.PRIORITY_DEFAULT, null,
                 (sess, res) => {

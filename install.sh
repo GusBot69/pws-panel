@@ -63,7 +63,13 @@ fi
 
 echo
 echo "==> Bridge health:"
-curl -fsS http://127.0.0.1:8766/health || echo "!! bridge not responding"
+curl -fsS http://127.0.0.1:8766/health || {
+    echo "!! bridge not responding — most likely cause: PWS_API_KEY is not set."
+    echo "!! The bridge refuses to start without it (it ships no key). Add it:"
+    echo "!!   mkdir -p ~/.config/systemd/user/pws-bridge.service.d"
+    echo "!!   printf '[Service]\nEnvironment=PWS_API_KEY=your-key\n' > ~/.config/systemd/user/pws-bridge.service.d/10-local.conf"
+    echo "!!   systemctl --user daemon-reload && systemctl --user restart pws-bridge"
+}
 echo
 echo "==> Sample /pws payload:"
 curl -fsS http://127.0.0.1:8766/pws | python3 -m json.tool | head -20 || echo "!! no data yet"

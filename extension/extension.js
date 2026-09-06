@@ -16,7 +16,9 @@ const DEFAULT_POLL_SECONDS = 900;
 const COMPASS = ['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'];
 
 function degToCompass(deg) {
-    return COMPASS[Math.round(deg / 22.5) % 16];
+    if (deg === null || deg === undefined || Number.isNaN(Number(deg)))
+        return '–';
+    return COMPASS[((Math.round(deg / 22.5) % 16) + 16) % 16];
 }
 
 // Same Rothfusz/NWS logic as pws-digest.py
@@ -135,7 +137,7 @@ class PwsPanelButton extends PanelMenu.Button {
         });
         this._addItem('🌐 Open Wunderground dashboard', () => {
             const st = data.station || this._settings.get_string('home-station') || 'PWS-LOCAL';
-            Gio.AppInfo.launch_default_for_uri(`https://www.wunderground.com/dashboard/pws/${st}`, null);
+            Gio.AppInfo.launch_default_for_uri(`https://www.wunderground.com/dashboard/pws/${encodeURIComponent(st)}`, null);
         });
     }
 
@@ -185,6 +187,7 @@ export default class PwsPanelExtension extends Extension {
     enable() {
         try {
             this._session = new Soup.Session();
+            this._session.timeout = 15; // never hang a refresh forever
             this._settings = this.getSettings();
             if (!this._settings) {
                 console.error('PWS Panel: GSettings schema not found — run glib-compile-schemas');

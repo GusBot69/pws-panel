@@ -85,7 +85,9 @@ def fetch_river_gauge():
 
 def fetch_station_current(station):
     """Fetch current conditions for an arbitrary station ID. Returns dict or None."""
-    url = CURRENT_URL.format(station=station, key=_PWS_KEY)
+    # Quote: station IDs come from user settings — never let them break out
+    # of the stationId query parameter.
+    url = CURRENT_URL.format(station=urllib.parse.quote(str(station), safe=""), key=_PWS_KEY)
     try:
         req = urllib.request.Request(url, headers={"User-Agent": "PwsBridge/1.0 (hermes)"})
         with urllib.request.urlopen(req, timeout=15) as resp:
@@ -137,6 +139,14 @@ def resolve_nearest_station(lat, lon):
         return None
 
 
+def _safe_float(value):
+    """float() that returns None on garbage instead of raising."""
+    try:
+        return float(value) if value is not None else None
+    except (TypeError, ValueError):
+        return None
+
+
 def build_payload(station=HOME_STATION):
     if station and station.upper() != HOME_STATION:
         data = fetch_station_current(station)
@@ -158,7 +168,10 @@ def build_payload(station=HOME_STATION):
         "uv_index": data.get("uv_index"),
         "precip_rate": data.get("precip_rate"),
         "precip_total": data.get("precip_total"),
-        "today_precip_total": fetch_pws_current_precip_total(),
+        # Derived from the SAME fetch above — not a second upstream call.
+        # (Previously this re-fetched current conditions, doubling API usage
+        # and, for explicit-station payloads, mixing in the primary's total.)
+        "today_precip_total": _safe_float(data.get("precip_total")),
         "aqi": aqi.get("aqi"),
         "aqi_level": aqi.get("level"),
         "aqi_emoji": aqi.get("emoji"),
@@ -225,7 +238,10 @@ class Handler(BaseHTTPRequestHandler):
                         if haversine_km(clat, clon, hlat, hlon) <= radius:
                             payload = get_payload(HOME_STATION)
                             if payload is not None:
-                                payload["auto_mode"] = "home-geofence"
+                                # Copy first: get_payload hands back the live
+                                # cached dict, and tagging it would leak
+                                # auto_mode into later plain responses.
+                                payload = {**payload, "auto_mode": "home-geofence"}
                                 self._send(200, {"ok": True, **payload})
                                 return
                             # Home station unreachable — fall through to nearest
@@ -235,7 +251,8 @@ class Handler(BaseHTTPRequestHandler):
                     if auto:
                         payload = get_payload(auto)
                         if payload is not None and payload.get("temp_f") is not None:
-                            payload["auto_mode"] = "nearest"
+                            # Copy first: never mutate the cached dict.
+                            payload = {**payload, "auto_mode": "nearest"}
                             self._send(200, {"ok": True, **payload})
                             return
                         # Silent/empty station — fall back to home
