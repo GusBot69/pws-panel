@@ -1,0 +1,22 @@
+/* PWS Panel — deliberately minimal.
+ * The panel label must inherit the panel's native font (same as the clock),
+ * so NO font-family/font-size/weight overrides here — that's what caused
+ * the visible mismatch. Emoji will still render in the color-emoji font,
+ * which is unavoidable and matches how GNOME itself renders emoji. */
+
+.pws-panel-label {
+    margin-right: 4px;
+}
+
+.pws-menu-header {
+    font-weight: 600;
+}
+
+.pws-row {
+    padding: 2px 8px;
+}
+
+.pws-row-value {
+    font-weight: 600;
+    margin-left: 12px;
+}

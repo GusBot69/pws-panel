@@ -1,0 +1,19 @@
+[Unit]
+Description=PWS bridge — local PWS weather JSON for the GNOME panel extension
+After=network-online.target
+
+[Service]
+Type=simple
+# Point the bridge at YOUR stations (placeholders fail over gracefully):
+#Environment=PWS_HOME_STATION=PWS-LOCAL
+#Environment=PWS_WIND_STATION=PWS-LOCAL-2
+#Environment=PWS_AQI_URL=https://aqicn.org/city/your-city/
+#Environment=PWS_API_KEY=your-wunderground-key
+ExecStart=/usr/bin/python3 %h/.local/share/pws-bridge/pws-bridge.py
+Restart=on-failure
+RestartSec=10
+# Bind-only-to-loopback is enforced in the bridge itself; keep this as belt-and-braces
+PrivateNetwork=no
+
+[Install]
+WantedBy=default.target

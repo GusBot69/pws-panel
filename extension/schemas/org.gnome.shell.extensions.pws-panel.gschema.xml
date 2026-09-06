@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.pws-panel"
+          path="/org/gnome/shell/extensions/pws-panel/">
+    <key name="station-mode" type="s">
+      <default>'home'</default>
+      <summary>Station selection mode</summary>
+      <description>How to pick the PWS station. 'home' always uses the home station; 'auto' resolves the nearest PWS from your current location.</description>
+    </key>
+    <key name="home-station" type="s">
+      <default>'PWS-LOCAL'</default>
+      <summary>Home PWS station ID</summary>
+      <description>Weather Underground station ID used in home mode and as fallback in auto mode. Set your own station in preferences.</description>
+    </key>
+    <key name="home-lat" type="d">
+      <default>0.0</default>
+      <summary>Home latitude</summary>
+      <description>Latitude of your home location for the auto-mode geofence. Set your own in preferences.</description>
+    </key>
+    <key name="home-lon" type="d">
+      <default>0.0</default>
+      <summary>Home longitude</summary>
+      <description>Longitude of your home location for the auto-mode geofence. Set your own in preferences.</description>
+    </key>
+    <key name="home-radius-km" type="d">
+      <default>5.0</default>
+      <range min="0.5" max="50.0"/>
+      <summary>Home geofence radius in km</summary>
+      <description>In auto mode, the home station is used when you're within this distance of home. Beyond it, the nearest PWS to your location is used.</description>
+    </key>
+    <key name="poll-interval" type="i">
+      <default>900</default>
+      <range min="60" max="3600"/>
+      <summary>Poll interval in seconds</summary>
+      <description>How often to refresh weather data. Default 900 (15 minutes). Minimum 60.</description>
+    </key>
+    <key name="show-label" type="b">
+      <default>true</default>
+      <summary>Show temperature in top bar</summary>
+      <description>Whether the top bar button shows the temperature text.</description>
+    </key>
+  </schema>
+</schemalist>
