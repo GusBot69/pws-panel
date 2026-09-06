@@ -4,5 +4,5 @@
   "description": "Personal Weather Station data in the top bar, fed by the local pws-bridge on 127.0.0.1:8766",
   "shell-version": ["50"],
   "settings-schema": "org.gnome.shell.extensions.pws-panel",
-  "version": 2
+  "version": 3
 }

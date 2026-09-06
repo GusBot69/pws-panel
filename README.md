@@ -2,13 +2,12 @@
 
 Live weather from your personal weather station (PWS) in the GNOME top bar.
 
-![screenshot placeholder](https://github.com/GusBot69/pws-panel/raw/main/screenshots/topbar.png)
-
 ## What it does
 
-- **Top bar button** (left of the clock): current temp + condition emoji — `83° ☁️`
-- **Dropdown menu**: temperature, real feel (heat index / wind chill), humidity, dew point, pressure, wind, solar radiation, UV index, precipitation, AQI (PM2.5), whole-house-fan verdict, last-updated timestamp
-- **🔄 Refresh now** + **🌐 Open Wunderground dashboard** in the menu
+- **Top bar button** (left of the clock): current temp + condition emoji — `72° ☁️`
+- **Dropdown menu**: temperature, real feel (heat index / wind chill), humidity, dew point, pressure, wind, solar radiation, UV index, precipitation, AQI (PM2.5), optional river/dam gauge row, whole-house-fan verdict, last-updated timestamp
+- **🔄 Refresh now** + **🌐 Open Wunderground dashboard** (opens *your* station) in the menu
+- **Home station dropdown** in preferences: pick from bridge-served stations or enter a custom ID — no hardcoding, no reinstall
 - **Auto station mode**: uses Geoclue location to pick the *nearest* PWS when you're on the road, with a home geofence that pins your home station when you're within range
 - **Full settings** via the Extensions app gear icon
 
@@ -38,9 +37,9 @@ Two pieces bridged over localhost:
 
 ## Requirements
 
-- GNOME Shell **45+** (tested on 50.4, Fedora)
+- GNOME Shell **50** (tested on 50.4, Fedora)
 - Python 3.10+ (bridge, stdlib only)
-- A Weather Underground **API key** (set `PWS_API_KEY` in the service env; get one free via any PWS-provider registration)
+- A Weather Underground **API key** — set `PWS_API_KEY` (see Configuration); the bridge refuses to start without it
 - A local PWS station ID (find yours on wunderground.com/wundermap and set it in preferences, or via `PWS_HOME_STATION`)
 
 ## Install
@@ -50,6 +49,32 @@ curl -fsSL https://github.com/GusBot69/pws-panel/raw/main/install.sh | bash
 ```
 
 Or download the repo and run `bash install.sh` from the project root.
+
+## Configuration
+
+All location-specific values are environment variables on the bridge service — nothing personal ships in the repo. Create an override after installing:
+
+```bash
+mkdir -p ~/.config/systemd/user/pws-bridge.service.d && cat > ~/.config/systemd/user/pws-bridge.service.d/10-local.conf <<'EOF'
+[Service]
+Environment=PWS_API_KEY=your-wunderground-key
+Environment=PWS_HOME_STATION=YOURPRIMARY
+Environment=PWS_WIND_STATION=YOURFALLBACK
+Environment=PWS_AQI_URL=https://aqicn.org/city/your-region/your-city/
+# Optional river/dam gauge row (scraped level + gates, omit if you have none):
+Environment=PWS_RIVER_URL=https://your-county.example/gauge-page
+Environment=PWS_RIVER_LABEL=Local River
+EOF
+systemctl --user daemon-reload && systemctl --user restart pws-bridge
+```
+
+| Variable | Required | Purpose |
+|---|---|---|
+| `PWS_API_KEY` | yes | Weather Underground key — bridge exits(2) without it |
+| `PWS_HOME_STATION` | yes | Primary PWS (full sensor suite), e.g. home mode + `/stations` list |
+| `PWS_WIND_STATION` | no | Fallback with anemometer (wind/solar/UV fill-in; never precip) |
+| `PWS_AQI_URL` | no | Full aqicn.org city URL for the AQI row |
+| `PWS_RIVER_URL` / `PWS_RIVER_LABEL` | no | Gauge page + menu label; row hidden when unset |
 
 ## Settings
 
