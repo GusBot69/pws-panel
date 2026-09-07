@@ -2,7 +2,7 @@
 
 Live weather from your personal weather station (PWS) in the GNOME top bar.
 
-![PWS Panel mock — placeholder data](screenshots/topbar-mock.png)
+![PWS Panel mock — placeholder data](screenshots/topbar-menu.png)
 
 ## What it does
 
