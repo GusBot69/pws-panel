@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="600" font-family="DejaVu Sans, Cantarell, sans-serif">
+  <defs>
+    <style>
+      .bar { fill: #1e1e1e; }
+      .clock { fill: #eeeeec; font-size: 15px; }
+      .temp { fill: #eeeeec; font-size: 15px; font-weight: bold; }
+      .menu { fill: #2d2d2d; stroke: #484848; stroke-width: 1; }
+      .header { fill: #ffffff; font-size: 16px; font-weight: bold; }
+      .label { fill: #bababa; font-size: 14px; }
+      .value { fill: #ffffff; font-size: 14px; }
+      .sep { stroke: #484848; stroke-width: 1; }
+      .action { fill: #7db8f0; font-size: 14px; }
+      .fan { fill: #8ff09a; font-size: 14px; }
+      .note { fill: #888888; font-size: 12px; }
+    </style>
+  </defs>
+
+  <!-- mock label, not part of the shot -->
+  <text x="10" y="20" class="note">MOCK — placeholder data, layout sketch of PWS Panel</text>
+
+  <!-- top bar -->
+  <rect x="0" y="30" width="760" height="36" class="bar"/>
+  <text x="20" y="54" class="temp">72° ☁️</text>
+  <text x="330" y="54" class="clock">Sun Sep 6&#160;&#160;6:45 PM</text>
+
+  <!-- dropdown menu -->
+  <rect x="8" y="70" width="360" height="508" rx="10" class="menu"/>
+  <text x="24" y="100" class="header">🌤&#160;&#160;PWS-LOCAL</text>
+  <line x1="16" y1="112" x2="360" y2="112" class="sep"/>
+
+  <text x="24" y="136" class="label">Temp</text><text x="352" y="136" class="value" text-anchor="end">72°F</text>
+  <text x="24" y="160" class="label">Real Feel</text><text x="352" y="160" class="value" text-anchor="end">72°F</text>
+  <text x="24" y="184" class="label">Humidity</text><text x="352" y="184" class="value" text-anchor="end">51%</text>
+  <text x="24" y="208" class="label">Dew Point</text><text x="352" y="208" class="value" text-anchor="end">54°F</text>
+  <text x="24" y="232" class="label">Pressure</text><text x="352" y="232" class="value" text-anchor="end">29.91 inHg</text>
+  <text x="24" y="256" class="label">Wind</text><text x="352" y="256" class="value" text-anchor="end">6 mph WSW</text>
+  <text x="24" y="280" class="label">Solar</text><text x="352" y="280" class="value" text-anchor="end">210 W/m²</text>
+  <text x="24" y="304" class="label">UV Index</text><text x="352" y="304" class="value" text-anchor="end">3</text>
+  <text x="24" y="328" class="label">Precip</text><text x="352" y="328" class="value" text-anchor="end">0 in/hr (today: 0")</text>
+  <text x="24" y="352" class="label">AQI</text><text x="352" y="352" class="value" text-anchor="end">🟢 38 (Good)</text>
+  <text x="24" y="376" class="label">River gauge</text><text x="352" y="376" class="value" text-anchor="end">🟢 675.1 ft</text>
+  <line x1="16" y1="388" x2="360" y2="388" class="sep"/>
+  <text x="24" y="412" class="label">Fan</text><text x="352" y="412" class="fan" text-anchor="end">✅ Safe — fan OK</text>
+  <line x1="16" y1="424" x2="360" y2="424" class="sep"/>
+  <text x="24" y="448" class="label">Updated</text><text x="352" y="448" class="value" text-anchor="end">2026-09-06T18:45</text>
+  <line x1="16" y1="460" x2="360" y2="460" class="sep"/>
+  <text x="24" y="484" class="action">🔄 Refresh now</text>
+  <text x="24" y="508" class="action">🌐 Open Wunderground dashboard</text>
+  <line x1="16" y1="520" x2="360" y2="520" class="sep"/>
+  <text x="24" y="544" class="label">Home station</text><text x="352" y="544" class="value" text-anchor="end">PWS-LOCAL ▾</text>
+  <text x="24" y="566" class="note">prefs: dropdown of bridge stations + Custom…</text>
+</svg>

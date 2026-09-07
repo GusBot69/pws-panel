@@ -2,6 +2,8 @@
 
 Live weather from your personal weather station (PWS) in the GNOME top bar.
 
+![PWS Panel mock — placeholder data](screenshots/topbar-mock.png)
+
 ## What it does
 
 - **Top bar button** (left of the clock): current temp + condition emoji — `72° ☁️`

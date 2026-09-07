@@ -2,5 +2,4 @@ __pycache__/
 *.pyc
 *.pyo
 pws-panel.tar.gz
-screenshots/
 .env
