@@ -23,6 +23,7 @@
   <text x="540" y="54" class="clock">Sun Sep 6&#160;&#160;7:10 PM</text>
 
   <!-- dropdown menu -->
+  <g transform="translate(312,0)">
   <rect x="8" y="70" width="360" height="508" rx="10" class="menu"/>
   <text x="24" y="100" class="header">☀️&#160;&#160;PWS-LOCAL</text>
   <line x1="16" y1="112" x2="360" y2="112" class="sep"/>
@@ -48,4 +49,5 @@
   <line x1="16" y1="520" x2="360" y2="520" class="sep"/>
   <text x="24" y="544" class="label">Home station</text><text x="352" y="544" class="value" text-anchor="end">PWS-LOCAL ▾</text>
   <text x="24" y="566" class="note">prefs: dropdown of bridge stations + Custom…</text>
+  </g>
 </svg>
