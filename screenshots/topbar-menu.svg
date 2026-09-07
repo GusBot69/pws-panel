@@ -17,10 +17,10 @@
 
   <text x="10" y="20" class="note">MOCK — placeholder data matching the real menu layout</text>
 
-  <!-- top bar -->
+  <!-- top bar: extension button sits immediately left of the clock -->
   <rect x="0" y="30" width="760" height="36" class="bar"/>
-  <text x="20" y="54" class="temp">71° ☀️</text>
-  <text x="330" y="54" class="clock">Sun Sep 6&#160;&#160;7:10 PM</text>
+  <text x="470" y="54" class="temp">71° ☀️</text>
+  <text x="540" y="54" class="clock">Sun Sep 6&#160;&#160;7:10 PM</text>
 
   <!-- dropdown menu -->
   <rect x="8" y="70" width="360" height="508" rx="10" class="menu"/>
