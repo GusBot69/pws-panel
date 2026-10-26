@@ -17,6 +17,12 @@ cp "$SRC/bridge/aqi_fetcher.py" "$BRIDGE_DIR/"
 
 echo "==> Installing systemd user unit"
 mkdir -p "$HOME/.config/systemd/user"
+# Never clobber live secrets: the service template ships with commented
+# Environment placeholders, real keys live in pws-bridge.service.d/10-local.conf
+# or (legacy) directly in the installed unit. Back up any existing unit first.
+if [ -f "$HOME/.config/systemd/user/pws-bridge.service" ]; then
+    cp "$HOME/.config/systemd/user/pws-bridge.service" "$HOME/.config/systemd/user/pws-bridge.service.bak-$(date +%Y%m%d-%H%M%S)"
+fi
 cp "$SRC/systemd/pws-bridge.service" "$HOME/.config/systemd/user/"
 systemctl --user daemon-reload
 # restart, not just enable --now: if the service is already running (from a

@@ -39,7 +39,7 @@ Two pieces bridged over localhost:
 
 ## Requirements
 
-- GNOME Shell **50** (tested on 50.4, Fedora)
+- GNOME Shell **50 / 51** (tested on 50.4; 51 support per GNOME 51 porting guide, no breaking APIs used)
 - Python 3.10+ (bridge, stdlib only)
 - A Weather Underground **API key** — set `PWS_API_KEY` (see Configuration); the bridge refuses to start without it
 - A local PWS station ID (find yours on wunderground.com/wundermap and set it in preferences, or via `PWS_HOME_STATION`)
